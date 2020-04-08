@@ -55,6 +55,7 @@ class AuthorizationError(Exception):
     def __init__(self, *args: Any) -> None:
         Exception.__init__(self, *args)
 
+
 class AlienvaultOTXAPI:
     """Class for interacting with Alienvault OTX API"""
 
@@ -152,11 +153,13 @@ class AlienvaultOTXAPI:
         # fallback
         return None
 
+
 class ConfigurationError(Exception):
     """Raised when invalid option for events to import is used"""
 
     def __init__(self, *args: Any) -> None:
         Exception.__init__(self, *args)
+
 
 def parseargs() -> argparse.ArgumentParser:
     """Extract command lines argument"""
@@ -172,12 +175,14 @@ def parseargs() -> argparse.ArgumentParser:
                         help='Path to store last retrival timestamp')
     return parser
 
+
 def strip_special_chars(msg: Text) -> Text:
     """Strips special chars from a string """
     for char in ['\r\n', '\n', '\r']:
         msg = msg.replace(char, ' ')
 
     return msg
+
 
 def handle_facts(args: argparse.Namespace, actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     """Generates a list of json facts based on a given ioc"""
@@ -233,6 +238,7 @@ def handle_facts(args: argparse.Namespace, actapi: act.api.helpers.Act, event: D
         name_fact.source('report', report_name)
         act.api.helpers.handle_fact(name_fact, output_format='json')
 
+
 def main() -> None:
     """Main function"""
     # Look for default ini file in "/etc/actworkers.ini" and
@@ -258,6 +264,7 @@ def main() -> None:
     for event in otxapi.get_subscribed():
         handle_facts(args, actapi, event)
 
+
 def main_log_error() -> None:
     "Main function wrapper. Log all exceptions to error"
     pid_file = '/tmp/act-alienvault-otx.pid'
@@ -274,6 +281,7 @@ def main_log_error() -> None:
         raise
     finally:
         os.unlink(pid_file)
+
 
 if __name__ == '__main__':
     main_log_error()
