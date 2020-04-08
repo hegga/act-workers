@@ -23,6 +23,7 @@ import logging
 import os
 import sys
 import traceback
+import urllib.parse
 from typing import Any, Dict, Generator, Optional, Text
 
 import act
@@ -104,12 +105,12 @@ class AlienvaultOTXAPI:
 
         # generate full api url
         if last_updated:
-            api_url = os.path.join(
+            api_url = urllib.parse.urljoin(
                 self.args.otx_baseurl,
                 f'v1/pulses/subscribed?modified_since={last_updated}'
             )
         else:
-            api_url = os.path.join(self.args.otx_baseurl, 'v1/pulses/subscribed?limit=100')
+            api_url = urllib.parse.urljoin(self.args.otx_baseurl, 'v1/pulses/subscribed?limit=100')
 
         # do api request
         data = self.__api_request(api_url)
