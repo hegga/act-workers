@@ -49,6 +49,7 @@ OTX_ACT_TYPE_MAPPING: Dict[Text, Text] = {
     'hostname': 'fqdn',
 }
 
+
 class AuthorizationError(Exception):
     """AutorizationError raised if API returns status code 403"""
 
@@ -90,7 +91,6 @@ class AlienvaultOTXAPI:
         # check for 403 status code
         if request.status_code == 403:
             raise AuthorizationError('Authentication required')
-
 
         # will raise exception if no json is returned which is how the api behaves
         # if you specify a wrong url
@@ -227,7 +227,7 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
             # if fact type is a hash, we also have to create a fact which tells us what kind
             # of hash it represents
             if act_type in ['hash']:
-                hash_type: Text =  ioc['type'].split('-')[-1].lower()
+                hash_type: Text = ioc['type'].split('-')[-1].lower()
                 hash_fact = actapi.fact('category', hash_type)
                 hash_fact.source(act_type, ioc['indicator'])
                 act.api.helpers.handle_fact(hash_fact, output_format='json')
