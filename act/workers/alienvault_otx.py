@@ -200,12 +200,15 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
         # identify act fact type
         act_type: Text = OTX_ACT_TYPE_MAPPING[ioc['type']]
 
+        # add schemas for certain ioc types
+        if ioc['type'] == 'email':
+            ioc['indicator'] = f'email://{ioc["indicator"]}'
+        elif ioc['type'] == 'FilePath':
+            ioc['indicator'] = f'file://{ioc["indicator"]}'
+
         # special treatment for uri's
         if act_type in ['uri']:
-            if ioc['type'] == 'email':
-                act.api.helpers.handle_uri(actapi, f'email://{ioc["indicator"]}', output_format='json')
-            else:
-                act.api.helpers.handle_uri(actapi, ioc['indicator'], output_format='json')
+            act.api.helpers.handle_uri(actapi, ioc['indicator'], output_format='json')
         else:
             # create fact
             if 'description' in ioc and ioc['description']:
