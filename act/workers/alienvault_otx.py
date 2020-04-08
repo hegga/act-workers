@@ -146,7 +146,7 @@ class AlienvaultOTXAPI:
                 try:
                     timestamp = datetime.datetime.fromisoformat(file_handle.read())
                     return str(timestamp)
-                except:
+                except ValueError:
                     return None
 
         # fallback
