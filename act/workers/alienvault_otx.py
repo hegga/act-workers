@@ -39,7 +39,7 @@ OTX_ACT_TYPE_MAPPING: Dict[Text, Text] = {
     'FileHash-MD5': 'hash',
     'FileHash-SHA1': 'hash',
     'FileHash-SHA256': 'hash',
-    'FilePath': 'path',
+    'FilePath': 'uri',
     'IPv4': 'ipv4',
     'IPv6': 'ipv6',
     'Mutex': 'mutex',
