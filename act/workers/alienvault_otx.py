@@ -262,7 +262,7 @@ def main() -> None:
 
     # create facts for indicators in each event
     for event in otxapi.get_subscribed():
-        handle_facts(args, actapi, event)
+        handle_facts(actapi, event)
 
 
 def main_log_error() -> None:
