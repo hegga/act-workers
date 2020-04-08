@@ -63,7 +63,7 @@ class AlienvaultOTXAPI:
         """Initialisation method"""
         self.args = args
 
-    def __api_request(self, api_url: Text) -> Dict[Any, Any]:
+    def __api_request(self, api_url: Text) -> Any:
         """Method for sending API requests to the Alienvault OTX API"""
 
         # add necessary headers
