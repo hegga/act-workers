@@ -110,7 +110,7 @@ class AlienvaultOTXAPI:
                 f'v1/pulses/subscribed?modified_since={last_updated}'
             )
         else:
-            api_url = urllib.parse.urljoin(self.args.otx_baseurl, 'v1/pulses/subscribed?limit=100')
+            api_url = urllib.parse.urljoin(self.args.otx_baseurl, 'v1/pulses/subscribed')
 
         # do api request
         data = self.__api_request(api_url)
