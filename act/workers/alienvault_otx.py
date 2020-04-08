@@ -44,7 +44,6 @@ OTX_ACT_TYPE_MAPPING: Dict[Text, Text] = {
     'Mutex': 'mutex',
     'URI': 'path',
     'URL': 'uri',
-    #'YARA': '',
     'domain': 'fqdn',
     'email': 'uri',
     'hostname': 'fqdn',
@@ -101,7 +100,6 @@ class AlienvaultOTXAPI:
 
         # get last updated timestamp
         last_updated = self.last_retrived()
-        #last_updated = '2020-04-04T13:22:11.650421'
 
         # generate full api url
         if last_updated:
