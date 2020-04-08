@@ -145,8 +145,8 @@ class AlienvaultOTXAPI:
             # try to read file, parse timestamp, and return it
             with open(self.args.otx_path_lastretrived, 'r') as file_handle:
                 try:
-                    timestamp = datetime.datetime.fromisoformat(file_handle.read())
-                    return str(timestamp)
+                    timestamp = str(datetime.datetime.strptime(file_handle.read(), '%Y-%m-%dT%H:%M:%S.%f'))
+                    return timestamp
                 except ValueError:
                     return None
 
