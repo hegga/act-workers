@@ -184,7 +184,7 @@ def strip_special_chars(msg: Text) -> Text:
     return msg
 
 
-def handle_facts(args: argparse.Namespace, actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
+def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     """Generates a list of json facts based on a given ioc"""
 
     # generate report name
