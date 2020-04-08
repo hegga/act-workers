@@ -277,7 +277,7 @@ def main_log_error() -> None:
             pid_fh.write(str(os.getpid()))
         main()
     except Exception:
-        logging.error('Unhandled exception: {}'.format(traceback.format_exc()))
+        logging.error('Unhandled exception: %s', traceback.format_exc())
         raise
     finally:
         os.unlink(pid_file)
