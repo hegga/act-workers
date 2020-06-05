@@ -19,6 +19,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 import argparse
 import datetime
+import hashlib
 import logging
 import os
 import sys
@@ -187,9 +188,18 @@ def strip_special_chars(msg: Text) -> Text:
 
 def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     """Generates a list of json facts based on a given ioc"""
+    
+    # generate event sha256 sum
+    report_sha256: Text = hashlib.sha256(str(event).encode('utf-8')).hexdigest()
 
     # generate report name
-    report_name: Text = f'otx-report-{event["id"]}'
+    report_name: Text = f'otx-report-{event["id"]}-{report_sha256}'
+
+    # add a name fact to the report
+    if 'description' in event and event['description']:
+        name_fact = actapi.fact('name', strip_special_chars(event['description']))
+        name_fact.source('report', report_name)
+        act.api.helpers.handle_fact(name_fact, output_format='json')
 
     # iterate over all indicators
     for ioc in event['indicators']:
@@ -235,12 +245,6 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
                 hash_fact = actapi.fact('category', hash_type)
                 hash_fact.source(act_type, ioc['indicator'])
                 act.api.helpers.handle_fact(hash_fact, output_format='json')
-
-    # add a name fact to the report
-    if 'description' in event and event['description']:
-        name_fact = actapi.fact('name', strip_special_chars(event['description']))
-        name_fact.source('report', report_name)
-        act.api.helpers.handle_fact(name_fact, output_format='json')
 
 
 def main() -> None:
