@@ -195,8 +195,8 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     ).hexdigest()
 
     # add a name fact to the report
-    if 'description' in event and event['description']:
-        name_fact = actapi.fact('name', strip_special_chars(event['description']))
+    if 'name' in event and event['name']:
+        name_fact = actapi.fact('name', strip_special_chars(event['name']))
         name_fact.source('report', report_name)
         act.api.helpers.handle_fact(name_fact, output_format='json')
 
