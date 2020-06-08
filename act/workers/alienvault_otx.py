@@ -188,12 +188,11 @@ def strip_special_chars(msg: Text) -> Text:
 
 def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     """Generates a list of json facts based on a given ioc"""
-    
-    # generate event sha256 sum
-    report_sha256: Text = hashlib.sha256(str(event).encode('utf-8')).hexdigest()
 
-    # generate report name
-    report_name: Text = f'otx-report-{event["id"]}-{report_sha256}'
+    # generate report name - sha256
+    report_name: Text = hashlib.sha256(
+            f'alienvault-otx-{event["id"]}-{event["modified"]}'.encode('utf-8')
+    ).hexdigest()
 
     # add a name fact to the report
     if 'description' in event and event['description']:
