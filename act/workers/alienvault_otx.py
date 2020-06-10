@@ -190,14 +190,14 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
     """Generates a list of json facts based on a given ioc"""
 
     # generate report name - sha256
-    report_name: Text = hashlib.sha256(
+    report_id: Text = hashlib.sha256(
             f'alienvault-otx-{event["id"]}-{event["modified"]}'.encode('utf-8')
     ).hexdigest()
 
     # add a name fact to the report
     if 'name' in event and event['name']:
         name_fact = actapi.fact('name', strip_special_chars(event['name']))
-        name_fact.source('report', report_name)
+        name_fact.source('report', report_id)
         act.api.helpers.handle_fact(name_fact, output_format='json')
 
     # iterate over all indicators
@@ -225,7 +225,7 @@ def handle_facts(actapi: act.api.helpers.Act, event: Dict[Any, Any]) -> None:
             else:
                 fact = actapi.fact('mentions')
 
-            fact.source('report', report_name)
+            fact.source('report', report_id)
 
             # some facts should not be lower cased
             # uri is handled above, but added for safety
